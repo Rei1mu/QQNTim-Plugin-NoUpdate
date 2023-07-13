@@ -1,5 +1,6 @@
 {
     "manifestVersion": "2.0",
+    "ver":"1.0.1",
     "id": "noUpdate",
     "name": "禁用更新",
     "author": "Rei1mu",
