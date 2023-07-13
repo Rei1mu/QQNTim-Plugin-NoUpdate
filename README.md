@@ -1,5 +1,5 @@
 # QQNTim-Plugin-NoUpdate
-基于QQNTim的插件，取消提示自动更新的烦人弹窗。
+基于QQNTim的插件v2，取消提示自动更新的烦人弹窗。
 
 ## 安装
 请先安装QQNTim, 教程见：
