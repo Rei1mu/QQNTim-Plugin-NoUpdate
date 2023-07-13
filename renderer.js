@@ -11,7 +11,6 @@ module.exports.default = class Entry {
                     }
                 }
             }, 100);
-            //半分钟后还不弹窗，应该不会弹了，取消上面的定时器
             setInterval(() => {
                 clearInterval(interval);
             }, 60000)
