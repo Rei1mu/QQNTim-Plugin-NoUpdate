@@ -1,33 +1,45 @@
 module.exports.default = class Entry {
-    insertStyle() {
-        const styleTag = document.createElement('style');
-        styleTag.innerHTML = '.q-dialog-modal { display: none !important; }';
-        document.body.appendChild(styleTag);
-    }
-    removeStyle() {
-        const styleTags = document.getElementsByTagName('style');
-        const targetStyle = '.q-dialog-modal { display: none; }';
+    constructor() {
+        // 目标元素的选择器
+        const targetSelector =
+            "body > div.q-dialog.vue-component > div.update-dialog.q-dialog-main.vue-component";
 
-        for (let i = 0; i < styleTags.length; i++) {
-            if (styleTags[i].innerHTML === targetStyle) {
-                styleTags[i].parentNode.removeChild(styleTags[i]);
-                break;
+        // 配置MutationObserver
+        const observerConfig = {
+            childList: true, // 观察目标元素子节点的变化
+            subtree: true, // 观察目标元素的所有后代节点
+        };
+
+        var isFound = false;
+
+        // 创建MutationObserver实例
+        const observer = new MutationObserver((mutationsList) => {
+            for (const mutation of mutationsList) {
+                if (mutation.type === "childList") {
+                    const targetElement = document.querySelector(targetSelector);
+                    if (targetElement) {
+                        console.log("[Fuck Update] Fuck!");
+                        targetElement.parentElement.remove();
+                        isFound = true
+                        observer.disconnect();
+                    }
+                }
             }
+        });
+
+        // 开始观察目标元素
+        const targetElement = document.querySelector(targetSelector);
+        if (targetElement) {
+            observer.observe(targetElement.parentNode, observerConfig);
+        } else {
+            console.log("[Fuck Update] Waiting update dialog");
+            observer.observe(document.body, observerConfig);
+            setTimeout(() => {
+                if(!isFound) {
+                    console.log("[Fuck Update] Timeout disconnect observer");
+                    observer.disconnect()
+                }
+            },60000)
         }
     }
-    constructor() {
-        this.insertStyle()
-        const interval = setInterval(() => {
-            // console.log("check update");
-            let update_btn = document.querySelector("body > div.q-dialog > div.update-dialog.q-dialog-main > div.q-dialog-footer > div > button.q-button.q-button--primary.q-button--default > span");
-            if (!update_btn)
-                return;
-            clearInterval(interval);
-            if (update_btn.textContent == "立即更新") {
-                document.querySelector("body > div.q-dialog > div.update-dialog.q-dialog-main > div.q-dialog-header > i").click()
-                setTimeout(this.removeStyle,200)
-            }
-        }, 100);
-        setInterval(() => { clearInterval(interval); }, 60000)
-    }
-}
+};
