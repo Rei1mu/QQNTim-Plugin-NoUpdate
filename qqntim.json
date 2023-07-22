@@ -1,10 +1,10 @@
 {
-    "manifestVersion": "2.0",
-    "ver":"1.0.1",
+    "manifestVersion": "3.0",
+    "version":"1.0.2",
     "id": "noUpdate",
     "name": "禁用更新",
     "author": "Rei1mu",
-    "description":"跳过更新的弹框",
+    "description":"跳过更新的弹框 for Plugin 3.0",
     "injections": [
         {
             "type": "renderer",
