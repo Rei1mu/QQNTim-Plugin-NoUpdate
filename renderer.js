@@ -1,4 +1,3 @@
-
 module.exports.default = class Entry {
     insertStyle() {
         const styleTag = document.createElement('style');
